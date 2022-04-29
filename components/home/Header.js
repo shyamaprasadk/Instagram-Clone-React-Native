@@ -4,7 +4,7 @@ import React from 'react'
 const Header = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.push('LoginScreen')}>
                 <Image style={styles.logo}
                     source={require('../../assets/header-logo.png')} />
             </TouchableOpacity>

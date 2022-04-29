@@ -1,25 +1,25 @@
 import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
 
-const LoginForm = ({navigation}) => {
+const SignupForm = ({ navigation }) => {
 
-    const LoginFormSchema = Yup.object().shape({
-        email: Yup.string().email().required("An E-mail is required"),
-        password: Yup.string().required().min(6, "Minimum 6 charecter needed")
+    const SignupFormSchema = Yup.object().shape({
+        email: Yup.string().email().required("An E-Mail address is required"),
+        username: Yup.string().required().min(4, "Username is required"),
+        password: Yup.string().required().min(6, "Your password have at least 6 characters")
     })
 
     return (
         <View style={styles.wrapper}>
             <Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ email: '', username: '', password: '' }}
                 onSubmit={valules => {
                     console.log(valules)
-                    navigation.push("HomeScreen")
                 }}
-                validationSchema={LoginFormSchema}
+                validationSchema={SignupFormSchema}
                 validateOnMount={true}
             >
                 {({ handleChange, handleBlur, handleSubmit, values, isValid }) => (
@@ -48,8 +48,28 @@ const LoginForm = ({navigation}) => {
                             styles.textInputField,
                             {
                                 borderColor:
-                                    1 > values.password.length || values.password.length >=6
-                                    ? '#616161' : 'red'
+                                    1 > values.username.length || values.username.length >= 2
+                                        ? '#616161' : 'red'
+                            }
+                        ]}>
+                            <TextInput
+                                placeholder='username'
+                                placeholderTextColor={"gray"}
+                                autoCapitalize='none'
+                                autoFocus={true}
+                                keyboardType='default'
+                                textContentType='username'
+                                onChangeText={handleChange('username')}
+                                onBlur={handleBlur('username')}
+                                value={values.username} />
+                        </View>
+
+                        <View style={[
+                            styles.textInputField,
+                            {
+                                borderColor:
+                                    1 > values.password.length || values.password.length >= 6
+                                        ? '#616161' : 'red'
                             }
                         ]}>
                             <TextInput
@@ -64,19 +84,19 @@ const LoginForm = ({navigation}) => {
                                 value={values.password} />
                         </View>
 
-                        <View style={{ alignItems: 'flex-end', marginBottom: 30 }}>
+                        <View style={{ alignItems: 'flex-end', marginBottom: 30, marginTop: 15 }}>
                             <Text style={{ color: '#6BB0F5' }}>Forgot password?</Text>
                         </View>
 
                         <Pressable onPress={handleSubmit}
                             style={styles.button(isValid)}>
-                            <Text style={styles.buttonText}>Log in</Text>
+                            <Text style={styles.buttonText}>Sign Up</Text>
                         </Pressable>
                         <View style={styles.signupContainer}>
-                            <Text>Don't have an account? </Text>
+                            <Text>Already have an account? </Text>
                             <TouchableOpacity activeOpacity={0.8}
-                                onPress={() => navigation.push('SignupScreen')}>
-                                <Text style={{ color: '#6BB0F5' }}>Sign Up</Text>
+                                onPress={() => navigation.goBack()}>
+                                <Text style={{ color: '#6BB0F5' }}>Log in</Text>
                             </TouchableOpacity>
                         </View>
                     </>
@@ -86,7 +106,7 @@ const LoginForm = ({navigation}) => {
     )
 }
 
-export default LoginForm
+export default SignupForm
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -94,7 +114,7 @@ const styles = StyleSheet.create({
     },
     textInputField: {
         borderRadius: 4,
-        padding: 1,
+        padding: 0.5,
         backgroundColor: '#FAFAFA',
         marginBottom: 10,
         borderWidth: 0.6,

@@ -1,22 +1,22 @@
 import { Image, StyleSheet, ScrollView, View } from 'react-native'
 import React from 'react'
-import LoginForm from '../components/login/LoginForm'
+import SignupForm from '../components/signup/SignupForm'
 
 const INSTAGRAM_LOGO = "https://img.icons8.com/fluency/100/000000/instagram-new.png"
 
-const LoginScreen = ({navigation}) => (
+const SignupScreen = ({ navigation }) => (
     <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.logoContainer}>
                 <Image
                     source={{ uri: INSTAGRAM_LOGO, width: 100, height: 100 }} />
             </View>
-            <LoginForm navigation={navigation} />
+            <SignupForm navigation={navigation} />
         </ScrollView>
     </View>
 )
 
-export default LoginScreen
+export default SignupScreen
 
 const styles = StyleSheet.create({
     container: {
