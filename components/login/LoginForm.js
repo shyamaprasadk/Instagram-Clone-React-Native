@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
 
-const LoginForm = ({navigation}) => {
+const LoginForm = ({ navigation }) => {
 
     const LoginFormSchema = Yup.object().shape({
         email: Yup.string().email().required("An E-mail is required"),
@@ -33,6 +33,7 @@ const LoginForm = ({navigation}) => {
                             }
                         ]}>
                             <TextInput
+                                style={{ color: '#000' }}
                                 placeholder='Phone number, username or email'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
@@ -48,11 +49,12 @@ const LoginForm = ({navigation}) => {
                             styles.textInputField,
                             {
                                 borderColor:
-                                    1 > values.password.length || values.password.length >=6
-                                    ? '#616161' : 'red'
+                                    1 > values.password.length || values.password.length >= 6
+                                        ? '#616161' : 'red'
                             }
                         ]}>
                             <TextInput
+                                style={{ color: '#000' }}
                                 placeholder='Password'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
@@ -73,7 +75,7 @@ const LoginForm = ({navigation}) => {
                             <Text style={styles.buttonText}>Log in</Text>
                         </Pressable>
                         <View style={styles.signupContainer}>
-                            <Text>Don't have an account? </Text>
+                            <Text style={{ color: 'gray' }}>Don't have an account? </Text>
                             <TouchableOpacity activeOpacity={0.8}
                                 onPress={() => navigation.push('SignupScreen')}>
                                 <Text style={{ color: '#6BB0F5' }}>Sign Up</Text>
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
         padding: 1,
         backgroundColor: '#FAFAFA',
         marginBottom: 10,
-        borderWidth: 0.6,
+        borderWidth: 1,
         justifyContent: 'center'
     },
     button: (isValid) => ({

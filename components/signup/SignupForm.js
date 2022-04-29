@@ -33,6 +33,7 @@ const SignupForm = ({ navigation }) => {
                             }
                         ]}>
                             <TextInput
+                                style={{ color: '#000' }}
                                 placeholder='Phone number, username or email'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
@@ -53,6 +54,7 @@ const SignupForm = ({ navigation }) => {
                             }
                         ]}>
                             <TextInput
+                                style={{ color: '#000' }}
                                 placeholder='username'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
@@ -73,6 +75,7 @@ const SignupForm = ({ navigation }) => {
                             }
                         ]}>
                             <TextInput
+                                style={{ color: '#000' }}
                                 placeholder='Password'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
@@ -93,7 +96,7 @@ const SignupForm = ({ navigation }) => {
                             <Text style={styles.buttonText}>Sign Up</Text>
                         </Pressable>
                         <View style={styles.signupContainer}>
-                            <Text>Already have an account? </Text>
+                            <Text style={{ color: 'gray' }}>Already have an account? </Text>
                             <TouchableOpacity activeOpacity={0.8}
                                 onPress={() => navigation.goBack()}>
                                 <Text style={{ color: '#6BB0F5' }}>Log in</Text>
