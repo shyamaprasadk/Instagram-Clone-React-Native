@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert, ToastAndroid } from 'react-native'
 import React from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
-// import firebase from '../../firebaseDb'
+import firebase from '../../firebase'
 
 const LoginForm = ({ navigation }) => {
 
@@ -12,21 +12,36 @@ const LoginForm = ({ navigation }) => {
         password: Yup.string().required().min(6, "Minimum 6 charecter needed")
     })
 
-    // const onLogin = async (email, password) => {
-    //     try {
-    //         await firebase.auth().signInWithEmailAndPassword(email, password)
-    //         console.log('Firebase logged in')
-    //     } catch (error) {
-    //         Alert.alert(error.message)
-    //     }
-    // }
+    const onLogin = async (email, password) => {
+        try {
+            await firebase.auth().signInWithEmailAndPassword(email, password);
+            ToastAndroid.show('Login successful', ToastAndroid.SHORT);
+            console.log('🔥 Firebase login successful ✅', email, password);
+        } catch (error) {
+            Alert.alert(
+                "We are sorry",
+                error.message + '\n\n What would you like to do next?',
+                [
+                    {
+                        text: "Sign up",
+                        onPress: () => navigation.push('SignupScreen')
+                    },
+                    {
+                        text: 'Ok',
+                        onPress: () => console.log('Ok Pressed'),
+                        style: 'cancel'
+                    }
+                ]
+            )
+        }
+    }
 
     return (
         <View style={styles.wrapper}>
             <Formik
                 initialValues={{ email: '', password: '' }}
-                onSubmit={valules => {
-                    // onLogin(valules.email, valules.password)
+                onSubmit={values => {
+                    onLogin(values.email, values.password)
                 }}
                 validationSchema={LoginFormSchema}
                 validateOnMount={true}
