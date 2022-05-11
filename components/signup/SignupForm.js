@@ -1,8 +1,9 @@
-import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, Pressable, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
+import { firebase, db } from '../../firebase'
 
 const SignupForm = ({ navigation }) => {
 
@@ -12,12 +13,37 @@ const SignupForm = ({ navigation }) => {
         password: Yup.string().required().min(6, "Your password have at least 6 characters")
     })
 
+    const onSignup = async (email, username,password) => {
+        try {
+            const authUser = await firebase
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+            ToastAndroid.show('Account created successful ✅', ToastAndroid.SHORT)
+            console.log('Account created successful ✅', email, username, password);
+
+            db.collection('users').add({
+                owner_uid: authUser.user.uid,
+                username: username,
+                email: authUser.user.email,
+                profile_Picture: await getRandomProfilePic(),
+            })
+        } catch (error) {
+            Alert.alert('Sorry', error.message)
+        }
+    }
+
+    const getRandomProfilePic = async () => {
+        const response = await fetch('https://randomuser.me/api')
+        const data = await response.json()
+        return data.results[0].picture.large
+    }
+
     return (
         <View style={styles.wrapper}>
             <Formik
                 initialValues={{ email: '', username: '', password: '' }}
                 onSubmit={valules => {
-                    console.log(valules)
+                    onSignup(valules.email, valules.username, valules.password)
                 }}
                 validationSchema={SignupFormSchema}
                 validateOnMount={true}
@@ -49,7 +75,7 @@ const SignupForm = ({ navigation }) => {
                             styles.textInputField,
                             {
                                 borderColor:
-                                    1 > values.username.length || values.username.length >= 2
+                                    1 > values.username.length || values.username.length >= 4
                                         ? '#616161' : 'red'
                             }
                         ]}>

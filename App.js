@@ -1,10 +1,8 @@
 import React from 'react'
-import SignedInStack from './screens/navigation'
+import AuthNavigation from './AuthNavigation'
 
 const App = () => {
-  return (
-    <SignedInStack/>
-  )
+  return <AuthNavigation/>
 }
 
 export default App

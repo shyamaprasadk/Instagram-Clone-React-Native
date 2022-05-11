@@ -1,10 +1,11 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { firebase } from '../../firebase'
 
-const Header = ({navigation}) => {
+const Header = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.push('LoginScreen')}>
+            <TouchableOpacity onPress={handleSignOut}>
                 <Image style={styles.logo}
                     source={require('../../assets/header-logo.png')} />
             </TouchableOpacity>
@@ -26,6 +27,14 @@ const Header = ({navigation}) => {
     )
 }
 
+const handleSignOut = async () => {
+    try {
+        await firebase.auth().signOut()
+        console.log('Signed Out')
+    } catch (error) {
+        console.log('ERROR: ', error);
+    }
+}
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'space-between',

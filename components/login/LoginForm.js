@@ -3,7 +3,7 @@ import React from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import Validator from 'email-validator'
-import firebase from '../../firebase'
+import {firebase} from '../../firebase'
 
 const LoginForm = ({ navigation }) => {
 
@@ -15,7 +15,7 @@ const LoginForm = ({ navigation }) => {
     const onLogin = async (email, password) => {
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password);
-            ToastAndroid.show('Login successful', ToastAndroid.SHORT);
+            ToastAndroid.show('Login successful ✅', ToastAndroid.SHORT);
             console.log('🔥 Firebase login successful ✅', email, password);
         } catch (error) {
             Alert.alert(
