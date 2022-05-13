@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { USERS } from '../../data/users'
 
 const Stories = () => {
@@ -11,7 +11,7 @@ const Stories = () => {
           <Image source={{ uri: story.image }} style={styles.stories}/>
           <Text style={{color:'#FFF', marginLeft:10}}>
             {story.user.length > 10 
-            ? story.user.slice(0,9).toLowerCase() + '...' 
+            ? story.user.slice(0,8).toLowerCase() + '...' 
             : story.user}
             </Text>
           </View>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius:50,
-    marginLeft:5,
+    marginLeft:8,
     borderWidth:3,
     borderColor:'#833AB4'
   }

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         resizeMode: 'contain',
-        marginHorizontal: 1
+        marginHorizontal: 4
     },
     unreadBadge: {
         backgroundColor: '#FF3250',

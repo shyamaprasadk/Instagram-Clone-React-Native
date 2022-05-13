@@ -61,7 +61,6 @@ const LoginForm = ({ navigation }) => {
                                 placeholder='Phone number, username or email'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
-                                autoFocus={true}
                                 keyboardType='email-address'
                                 textContentType='emailAddress'
                                 onChangeText={handleChange('email')}

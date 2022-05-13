@@ -13,7 +13,7 @@ const SignupForm = ({ navigation }) => {
         password: Yup.string().required().min(6, "Your password have at least 6 characters")
     })
 
-    const onSignup = async (email, username,password) => {
+    const onSignup = async (email, username, password) => {
         try {
             const authUser = await firebase
                 .auth()
@@ -21,12 +21,16 @@ const SignupForm = ({ navigation }) => {
             ToastAndroid.show('Account created successful ✅', ToastAndroid.SHORT)
             console.log('Account created successful ✅', email, username, password);
 
-            db.collection('users').add({
-                owner_uid: authUser.user.uid,
-                username: username,
-                email: authUser.user.email,
-                profile_Picture: await getRandomProfilePic(),
-            })
+            db.collection('users')
+            // Self generate document ID on firestore
+                .doc(authUser.user.email)
+            // ==============================    
+                .set({
+                    owner_uid: authUser.user.uid,
+                    username: username,
+                    email: authUser.user.email,
+                    profile_Picture: await getRandomProfilePic(),
+                })
         } catch (error) {
             Alert.alert('Sorry', error.message)
         }
@@ -63,7 +67,7 @@ const SignupForm = ({ navigation }) => {
                                 placeholder='Phone number, username or email'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
-                                autoFocus={true}
+                                // autoFocus={true}
                                 keyboardType='email-address'
                                 textContentType='emailAddress'
                                 onChangeText={handleChange('email')}
@@ -84,7 +88,7 @@ const SignupForm = ({ navigation }) => {
                                 placeholder='username'
                                 placeholderTextColor={"gray"}
                                 autoCapitalize='none'
-                                autoFocus={true}
+                                // autoFocus={true}
                                 keyboardType='default'
                                 textContentType='username'
                                 onChangeText={handleChange('username')}
